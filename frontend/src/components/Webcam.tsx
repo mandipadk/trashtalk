@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import "../App.css";
 
@@ -51,15 +51,22 @@ export const WebcamCapture = () => {
   }
 
   return (
-    <>
+    <div className="flex flex-row justify-center gap-10">
+      {/* <div className="grid grid-cols-2 gap-4">
+      <div>
+        01
+        </div>
+
+      <div>02</div>
+      </div> */}
+
+      <div>
       {isCaptureEnable || (
-        <button onClick={() => setCaptureEnable(true)}>Enable Webcam</button>
+        <button className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => setCaptureEnable(true)}>Enable Webcam</button>
       )}
       {isCaptureEnable && (
         <>
-          <div>
-            <button onClick={() => setCaptureEnable(false)}>Stop Webcam </button>
-          </div>
+           <p>Live Webcam:</p>
           <div>
             <Webcam
               audio={false}
@@ -70,25 +77,39 @@ export const WebcamCapture = () => {
               videoConstraints={videoConstraints}
             />
           </div>
-          <p>Most Recent Image:</p>
+
+          <div>
+            <button className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => setCaptureEnable(false)}>Stop Webcam </button>
+          </div>
         </>
+        
       )}
+      </div>
+
+      <div>
       {url && (
         <>
+        <div>
+        <p>Most Recent Image:</p>
+          
+          <div >
+            <img src={url} alt="Screenshot"/>
+          </div>
           <div>
             <button
+            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               onClick={() => {
                 setUrl(null);
               }}
             >
-              delete
+              Delete Image
             </button>
           </div>
-          <div>
-            <img src={url} alt="Screenshot" />
           </div>
         </>
       )}
-    </>
+      </div>
+
+    </div>
   );
 };

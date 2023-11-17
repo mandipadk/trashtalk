@@ -1,6 +1,6 @@
 const tf = require('@tensorflow/tfjs-node');
 const express = require('express');
-// const bodyParser = require('body-parser')
+const axios = require('axios');
 const app = express();
 const fs = require('fs');
 var cors = require('cors')
@@ -54,12 +54,24 @@ app.post('/upload', cors(corsOptions), async (req, res) => {
     }
     
     try {
+        axios.post('https://minkumari.imbishal7.repl.co/process_image', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            imageData
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         const model = await mobilenet.load({version, alpha});
         const imageTensor = tf.node.decodeImage(buffer);
         const predictions = await model.classify(imageTensor);
 
         console.log('Predictions');
-        console.log(predictions);
+        console.log(predictions[0]);
         // const modelTwo = await tf.loadLayersModel('https://storage.googleapis.com/tensorflowmodeljs/js_model/model.json');
         // const tensor = tfnode.node.decodeImage(imageBuffer);
         // const imageTensor = tf.node.decodeImage(image, 3);  // Assuming the image is in RGB format
