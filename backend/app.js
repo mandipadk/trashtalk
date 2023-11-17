@@ -46,32 +46,34 @@ app.get('/get-data', cors(corsOptions), (req, res)=>{
 //this works
 app.post('/upload', cors(corsOptions), async (req, res) => {
     const imageData = req.body.data;
-    console.log(imageData)
+    // console.log(imageData)
     const buffer = Buffer.from(imageData.split('base64,')[1], 'base64');
-    console.log(buffer);
+    // console.log(buffer);
     if (!buffer) {
         return res.json({ message: "No image data received." });
     }
     
     try {
-        axios.post('https://minkumari.imbishal7.repl.co/process_image', {
+        axios.post('https://rnhno-34-31-20-209.a.free.pinggy.online/process_image', {
             headers: {
                 'Content-Type': 'application/json',
             },
             imageData
         })
           .then(function (response) {
-            console.log(response);
+            console.log(response.data.predictions, response.data.confidence);
+            res.json({ Prediction: response.data.predictions, Confidence: response.data.confidence});
           })
           .catch(function (error) {
             console.log(error);
+            res.json({ message: error.message });
           });
-        const model = await mobilenet.load({version, alpha});
-        const imageTensor = tf.node.decodeImage(buffer);
-        const predictions = await model.classify(imageTensor);
+        // const model = await mobilenet.load({version, alpha});
+        // const imageTensor = tf.node.decodeImage(buffer);
+        // const predictions = await model.classify(imageTensor);
 
-        console.log('Predictions');
-        console.log(predictions[0]);
+        // console.log('Predictions');
+        // console.log(predictions[0]);
         // const modelTwo = await tf.loadLayersModel('https://storage.googleapis.com/tensorflowmodeljs/js_model/model.json');
         // const tensor = tfnode.node.decodeImage(imageBuffer);
         // const imageTensor = tf.node.decodeImage(image, 3);  // Assuming the image is in RGB format

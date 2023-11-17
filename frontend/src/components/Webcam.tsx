@@ -8,10 +8,16 @@ const videoConstraints = {
   facingMode: "user"
 };
 
+interface PredictionData {
+  Prediction: any;
+  Confidence: any;
+ }
+
 export const WebcamCapture = () => {
   const [isCaptureEnable, setCaptureEnable] = useState<boolean>(false);
   const webcamRef = useRef<Webcam>(null);
   const [url, setUrl] = useState<string | null>(null);
+  const [prediction, setPrediction] = useState<PredictionData | null>(null);
   // const capture = useCallback(() => {
   //   const imageSrc = webcamRef.current?.getScreenshot();
   //   if (imageSrc) {
@@ -38,20 +44,23 @@ export const WebcamCapture = () => {
   }, []);
 
   async function sendImageToBackend(imageData: any){
-    fetch('https://5000-mandipadk-trashtalk-3bad4zni6by.ws-us106.gitpod.io/upload', {
+    fetch('https://reimagined-space-capybara-qggr5vvr95wh4xj7-5000.app.github.dev/upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ data: imageData }),
     })
-    .then(response => response.text())
-    .then(message => console.log(message))
+    .then(response => response.json())
+    .then(data => {
+      setPrediction(data);
+    })
     .catch(error => console.error('Error:', error));
-  }
+   }
 
   return (
-    <div className="flex flex-row justify-center gap-10">
+    <div>
+    <div className="flex flex-row justify-center gap-10 my-16">
       {/* <div className="grid grid-cols-2 gap-4">
       <div>
         01
@@ -66,8 +75,8 @@ export const WebcamCapture = () => {
       )}
       {isCaptureEnable && (
         <>
-           <p>Live Webcam:</p>
-          <div>
+           <p className="text-m font-bold tracking-tight text-gray-700 sm:text-xl">Live Webcam:</p>
+          <div className="borderContainer">
             <Webcam
               audio={false}
               width={540}
@@ -78,7 +87,7 @@ export const WebcamCapture = () => {
             />
           </div>
 
-          <div>
+          <div className ="mt-8 flex justify-center">
             <button className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => setCaptureEnable(false)}>Stop Webcam </button>
           </div>
         </>
@@ -90,12 +99,11 @@ export const WebcamCapture = () => {
       {url && (
         <>
         <div>
-        <p>Most Recent Image:</p>
-          
-          <div >
+        <p className="text-m font-bold tracking-tight text-gray-700 sm:text-xl">Most Recent Image Captured:</p> 
+          <div className="borderContainer">
             <img src={url} alt="Screenshot"/>
           </div>
-          <div>
+          <div className="mt-8 flex justify-center">
             <button
             className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               onClick={() => {
@@ -110,6 +118,8 @@ export const WebcamCapture = () => {
       )}
       </div>
 
+    </div>
+    {isCaptureEnable && <div className="text-center font-bold text-xl"> Prediction: {prediction && prediction.Prediction}  & Confidence: {prediction && prediction.Confidence} </div>}
     </div>
   );
 };

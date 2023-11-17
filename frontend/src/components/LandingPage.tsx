@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import logo from '../assets/trash_talk_final.svg'
-import logotwo from '../assets/message.svg'
+// import logo from '../assets/trash_talk_final.svg'
+// import logotwo from '../assets/message.svg'
+import logothird from '../assets/logo.svg'
 
 const navigation = [
   { name: 'About Us', href: '#' },
@@ -23,8 +24,8 @@ export default function Example() {
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Trash Talk</span>
               <img
-                className="h-48 w-auto mt-[-100px]"
-                src={logotwo}
+                className="h-15 w-auto"
+                src={logothird}
                 alt=""
               />
             </a>
@@ -48,7 +49,7 @@ export default function Example() {
           </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-              Log in (Coming Soon)<span aria-hidden="true">&rarr;</span>
+              Log in<span aria-hidden="true">&rarr;</span>
             </a>
           </div> 
         </nav>
