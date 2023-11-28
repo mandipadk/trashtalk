@@ -54,7 +54,7 @@ app.post('/upload', cors(corsOptions), async (req, res) => {
     }
     
     try {
-        axios.post('https://rnhno-34-31-20-209.a.free.pinggy.online/process_image', {
+        axios.post('/process_image', {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -68,18 +68,6 @@ app.post('/upload', cors(corsOptions), async (req, res) => {
             console.log(error);
             res.json({ message: error.message });
           });
-        // const model = await mobilenet.load({version, alpha});
-        // const imageTensor = tf.node.decodeImage(buffer);
-        // const predictions = await model.classify(imageTensor);
-
-        // console.log('Predictions');
-        // console.log(predictions[0]);
-        // const modelTwo = await tf.loadLayersModel('https://storage.googleapis.com/tensorflowmodeljs/js_model/model.json');
-        // const tensor = tfnode.node.decodeImage(imageBuffer);
-        // const imageTensor = tf.node.decodeImage(image, 3);  // Assuming the image is in RGB format
-        // const preprocessedTensor = preprocessImage(imageTensor);
-        // const predictions = model.predict(preprocessedTensor);
-        // console.log(predictions);
 
         // const wasteCategory = getWasteCategory(predictions);
         // res.json({ category: wasteCategory });

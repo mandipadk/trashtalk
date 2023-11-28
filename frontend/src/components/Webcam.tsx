@@ -44,7 +44,7 @@ export const WebcamCapture = () => {
   }, []);
 
   async function sendImageToBackend(imageData: any){
-    fetch('https://reimagined-space-capybara-qggr5vvr95wh4xj7-5000.app.github.dev/upload', {
+    fetch('/upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
