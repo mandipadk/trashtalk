@@ -1,3 +1,5 @@
-# trashtalk
+# TrashTalk
 
-## please create branches for different features and open a pull request to merge into main branch
+## Tech for Social Impact
+
+Working towards a better future!
